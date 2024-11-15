@@ -5,10 +5,12 @@ const createItems = async(req, res) => {
         const {
             name,
             quantity,
+            typ,
         } = req.body;
         const items = await Items.create({
             name,
             quantity,
+            typ,
         });
         res.status(201).json({data:items});
     } catch(err){
@@ -19,7 +21,7 @@ const createItems = async(req, res) => {
 const getAllItems = async(req, res) => {
     try{
         const items = await Items.find();
-        !items.length? res.status(200).json({msg:"No Item in DB"}): res.status(200),json({data:items})
+        !items.length? res.status(200).json({msg:"No Item in DB"}): res.status(200).json({data:items})
     } catch(err){
         res.status(500).json({err})
     }
@@ -41,15 +43,17 @@ const updateItems = async(req, res) => {
         const {
             name,
             quantity,
-        } = res.body;
+            typ,
+        } = req.body;
         const items = await Items.findByIdAndUpdate(
             id,
             {
                 name,
                 quantity,
+                typ,
             },
             {
-                new: ture
+                new: true
             }
         );
         items? res.status(200).json({msg: 'Item updated sucessfully', data: items}): res.status(404).json({msg:'No such Item'})

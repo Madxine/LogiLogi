@@ -7,6 +7,10 @@ const itemsSchema = new mongoose.Schema({
     "quantity":{
         type: Number
     },
+    "typ":{
+        type: String,
+        require:true
+    },
 });
 
 module.exports = mongoose.model('Items', itemsSchema)
