@@ -20,7 +20,7 @@ const page = () => {
 
   const getAllItems = async() => {
 
-      const res = await fetch(`http://localhost:5000/items`);
+      const res = await fetch(`https://logilogi.onrender.com/items`);
       const data = await res.json();
       setItems(data.data);
     };
@@ -66,7 +66,7 @@ const page = () => {
           quantity:inputValue[id]
         })
         };
-        const res = await fetch(`http://localhost:5000/items/${id}`, requestContents);
+        const res = await fetch(`https://logilogi.onrender.com/items/${id}`, requestContents);
         if (res.ok) {
           console.log(`Update successful for item ${id}`);
           getAllItems(); // Refresh the data
@@ -97,7 +97,7 @@ const page = () => {
               typ:"food"
             })
           };
-          const res = await fetch('http://localhost:5000/items',requestNew);
+          const res = await fetch('https://logilogi.onrender.com/items',requestNew);
           if (res.ok) {
             console.log('Update successful for item');
             getAllItems(); // Refresh the data
