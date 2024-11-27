@@ -7,7 +7,7 @@ deployed on Netlify →
 
 
 
-## backend API for pokefight
+backend API for logiLogi →
 deployed on Render →
 [Visit](https://logilogi.onrender.com)
 
