@@ -1,5 +1,5 @@
-## LogiLogi
-# Privat Project for household
+# LogiLogi
+## Privat Project for household
  
 
 deployed on Netlify →
@@ -9,7 +9,7 @@ deployed on Netlify →
 
 ## backend API for pokefight
 deployed on Render →
-[Visit](https://logilogi.onrender.com))
+[Visit](https://logilogi.onrender.com)
 
 ## Using Tools
 - JavaScript
