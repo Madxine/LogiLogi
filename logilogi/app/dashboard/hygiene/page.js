@@ -16,7 +16,7 @@ const page = () => {
   const [inputNew, setInputNew] = useState("");
   const [inputNewNum, setInputNewNum] = useState("");
   const [items, setItems] = useState([]);
-  const [query, setQuery] = useState("");
+  const [typ, setTyp] = useState("");
 
   const getAllItems = async() => {
 
@@ -30,7 +30,7 @@ const page = () => {
       getAllItems();   
     }, []);
 
-//Input Handlers
+//Updated Input Handlers
     const newNumber = (e,id) => {
       setInputValue({
         ...inputValue,
@@ -43,11 +43,16 @@ const page = () => {
         [id]:e.target.value
       });
     };
+
+//New Input Handler
     const newItem = (e) => {
       setInputNew( e.target.value);
     };
     const newItemNum = (e) => {
       setInputNewNum(e.target.value);
+    };
+    const newTyp = (e) => {
+      setTyp(e.target.value);
     };
 
 //Update Handler
@@ -94,7 +99,7 @@ const page = () => {
             body: JSON.stringify({
               name:inputNew,
               quantity:inputNewNum,
-              typ:"food"
+              typ:typ,
             })
           };
           const res = await fetch('https://logilogi.onrender.com/items',requestNew);
@@ -112,16 +117,27 @@ const page = () => {
       }
     }
 
+    // const hRegex = /hygiene/i;
+    // console.log(hRegex.ignoreCase);
   return (
     <div> 
       <Form>
         <input placeholder="What's new to add" value={inputNew} onChange={(e)=>newItem(e)}></input>
         <input placeholder="How many of them" value={inputNewNum} onChange={(e)=>newItemNum(e)}></input>
+        <div>
+              <button flat="true">Choose Category</button>
+              <select value={typ} onChange={newTyp} required>
+                <option>Food</option>
+                <option>Cleaning</option>
+                <option>Hygiene</option>
+                <option>Other</option>
+              </select>
+            </div>
         <button onClick={(e)=>addNewItem(e)}>Add New Item</button>
       </Form>
        <ul key={items._id} className='list-none hover:list-disc'>
-          {!items? <Image style={{width : "50px"}} alt={"loading"} src={beanEater} /> : 
-          items.filter((i) => i.typ === "hygiene" ).map((i) => 
+          {!items.length? <Image style={{width : "50px"}} alt={"loading"} src={beanEater} /> : 
+          items.filter((i) => i.typ === "hygiene" || i.typ === "Hygiene" ).map((i) => 
           <li key={i._id}>
           <Form action=''>
             <input id={i._id} type='text' defaultValue={inputText[i._id] || i.name} onChange={(e)=>newName(e, i._id)}></input>

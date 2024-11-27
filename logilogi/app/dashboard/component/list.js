@@ -7,8 +7,6 @@ import Form from 'next/form';
 import beanEater from '../assets/beanEater.svg';
 
 
-    
-
 const List = () => {
 
   const [inputValue, setInputValue] = useState({});
@@ -16,7 +14,7 @@ const List = () => {
   const [inputNew, setInputNew] = useState("");
   const [inputNewNum, setInputNewNum] = useState("");
   const [items, setItems] = useState([]);
-  const [query, setQuery] = useState("");
+  const [typ, setTyp] = useState("");
 
   const getAllItems = async() => {
       const res = await fetch(`https://logilogi.onrender.com/items`);
@@ -29,7 +27,7 @@ const List = () => {
       getAllItems();   
     }, []);
 
-//Input Handlers
+//Updateed Input Handlers
     const newNumber = (e,id) => {
       setInputValue({
         ...inputValue,
@@ -42,11 +40,15 @@ const List = () => {
         [id]:e.target.value
       });
     };
+//New Input Handlers
     const newItem = (e) => {
       setInputNew( e.target.value);
     };
     const newItemNum = (e) => {
       setInputNewNum(e.target.value);
+    };
+    const newTyp = (e) => {
+      setTyp(e.target.value);
     };
 
 //Update Handler
@@ -78,7 +80,6 @@ const List = () => {
     };
 
 //New Item Handler
-
     const addNewItem = async(e) => {
       e.preventDefault();
       if(!inputNew || !inputNewNum) {
@@ -93,7 +94,7 @@ const List = () => {
             body: JSON.stringify({
               name:inputNew,
               quantity:inputNewNum,
-              typ:"food"
+              typ: typ,
             })
           };
           const res = await fetch('https://logilogi.onrender.com/items',requestNew);
@@ -116,12 +117,20 @@ const List = () => {
       <Form>
         <input placeholder="What's new to add" value={inputNew} onChange={(e)=>newItem(e)}></input>
         <input placeholder="How many of them" value={inputNewNum} onChange={(e)=>newItemNum(e)}></input>
+        <div>
+              <button flat="true">Choose Category</button>
+              <select value={typ} onChange={newTyp} required>
+                <option>Food</option>
+                <option>Cleaning</option>
+                <option>Hygiene</option>
+                <option>Other</option>
+              </select>
+            </div>
         <button onClick={(e)=>addNewItem(e)}>Add New Item</button>
       </Form>
        <ul key={items._id} className='list-none hover:list-disc'>
-          {!items? <Image style={{width : "50px"}} alt={"loading"} src={beanEater} /> : 
-          items.filter((i) => i.typ === "food" ).map((i) => 
-          <li key={i._id}>
+          {!items.length? <Image style={{width : "50px"}} alt={"loading"} src={beanEater} /> : 
+          items.filter((i) => i.typ === "food" || i.typ === "Food").map((i) => <li key={i._id}>
           <Form action=''>
             <input id={i._id} type='text' defaultValue={inputText[i._id] || i.name} onChange={(e)=>newName(e, i._id)}></input>
             <input id={i._id} type='number' defaultValue={inputValue[i._id] || i.quantity} onChange={(e)=>newNumber(e, i._id)}></input>
